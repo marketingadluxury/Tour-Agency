@@ -87,8 +87,8 @@ Hệ thống cần một Bucket trên Supabase Storage để lưu trữ ảnh �
 ```env
 # 1. CẤU HÌNH SUPABASE (BẮT BUỘC)
 VITE_SUPABASE_URL="https://your-project-id.supabase.co"
-VITE_SUPABASE_ANON_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-SUPABASE_SERVICE_ROLE_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+VITE_SUPABASE_ANON_KEY="eyJhbGciOi........."
+SUPABASE_SERVICE_ROLE_KEY="eyJhbGc........."
 
 # 2. CẤU HÌNH TRỢ LÝ AI (TÙY CHỌN)
 GEMINI_API_KEY="your-gemini-api-key"
