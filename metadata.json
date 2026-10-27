@@ -1,0 +1,8 @@
+{
+  "name": "Tour CRM",
+  "description": "Hệ thống quản lý Tour du lịch, Đại lý, Visa và Kế toán",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

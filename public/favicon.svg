@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none">
+  <!-- Rounded blue background canvas -->
+  <rect width="64" height="64" rx="16" fill="#2563EB"/>
+  
+  <!-- Flat Boarding Pass / Ticket Shape -->
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M 12 18 H 21 A 3 3 0 0 1 27 18 H 52 A 4 4 0 0 1 56 22 V 42 A 4 4 0 0 1 52 46 H 27 A 3 3 0 0 1 21 46 H 12 A 4 4 0 0 1 8 42 V 22 A 4 4 0 0 1 12 18 Z" fill="white"/>
+  
+  <!-- Perforated separator line -->
+  <line x1="24" y1="21" x2="24" y2="43" stroke="#2563EB" stroke-width="1.5" stroke-dasharray="2 2" stroke-linecap="round"/>
+  
+  <!-- Barcode stub graphics (refined vertical line segments on the left stub like a real barcode) -->
+  <rect x="12" y="22" width="1.5" height="20" rx="0.75" fill="#2563EB"/>
+  <rect x="15" y="22" width="2.5" height="20" rx="1" fill="#2563EB"/>
+  <rect x="19" y="22" width="1" height="20" rx="0.5" fill="#2563EB"/>
+  <rect x="21" y="22" width="1.5" height="20" rx="0.75" fill="#2563EB"/>
+
+  <!-- Minimalist Flat Airplane Shape (aligned and rotated -45 deg around the ticket center) -->
+  <path d="M 11 0 L 4.5 -1.8 L 1 -7.5 C 0.6 -8 0.2 -8 0 -7.5 L 1.2 -1.8 L -4.5 -1.8 L -6.5 -4.5 C -6.8 -4.8 -7.2 -4.8 -7.5 -4.5 L -7 -1.2 L -7 1.2 L -7.5 4.5 C -7.2 4.8 -6.8 4.8 -6.5 4.5 L -4.5 1.8 L 1.2 1.8 L 0 7.5 C 0.2 8 0.6 8 1 7.5 L 4.5 1.8 L 11 0 Z" fill="#2563EB" transform="translate(40, 32) rotate(-45)"/>
+</svg>

@@ -1,0 +1,332 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+*, *::before, *::after {
+  font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+html, body {
+  font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@layer utilities {
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .scrollbar-none {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+
+  /* Custom thin scrollbars for dense data tables */
+  .custom-scrollbar::-webkit-scrollbar {
+    height: 6px;
+    width: 6px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: #f1f5f9;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 9999px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+  }
+}
+
+html, body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom styles for native select elements and dropdown popups */
+select {
+  font-family: var(--font-sans) !important;
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 0.75rem center !important;
+  background-size: 0.9rem !important;
+  padding-right: 2.25rem !important;
+  cursor: pointer;
+}
+
+/* Style select options popup across browsers */
+select option {
+  font-family: var(--font-sans) !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  background-color: #ffffff !important;
+  color: #1e293b !important;
+  padding: 8px 12px !important;
+}
+
+select option:hover,
+select option:focus,
+select option:active,
+select option:checked {
+  background-color: #eff6ff !important;
+  color: #1d4ed8 !important;
+}
+
+/* Standardized input, select & textarea focus ring & borders */
+input, select, textarea {
+  font-family: var(--font-sans);
+}
+
+/* Base utilities for input & select alignment */
+.form-control-equal {
+  height: 36px !important;
+  font-size: 12px !important;
+  line-height: 1rem !important;
+  border-radius: 0.5rem !important;
+  border-width: 1px !important;
+  border-color: #cbd5e1 !important;
+  background-color: #ffffff !important;
+  color: #1e293b !important;
+  padding-left: 0.625rem !important;
+  padding-right: 0.625rem !important;
+}
+
+.form-control-equal:focus {
+  border-color: #3b82f6 !important;
+  outline: none !important;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2) !important;
+}
+
+/* Marquee scrolling ticker */
+@keyframes marquee-scroll {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: inline-flex;
+  white-space: nowrap;
+  animation: marquee-scroll 25s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* ==========================================================================
+   Centralized Print Styles (A4 Documents & Multi-Page Contracts)
+   Prevents React 19 "Expected static flag was missing" internal reconciler error
+   and ensures 100% full multi-page document flow without blank print pages.
+   ========================================================================== */
+@media print {
+  /* Ẩn toàn bộ nút bấm, thanh điều khiển có đánh dấu no-print */
+  .no-print,
+  [data-no-print="true"] {
+    display: none !important;
+  }
+
+  /* --------------------------------------------------------------------------
+     1. Hợp đồng dịch vụ du lịch Tour CRM (In Đa Trang A4 Đứng / Portrait)
+     -------------------------------------------------------------------------- */
+  body.is-printing-contract,
+  body:has(#official-tour-contract-print-area) {
+    background: #ffffff !important;
+    color: #000000 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    height: auto !important;
+    min-height: auto !important;
+  }
+
+  /* Ẩn các thanh layout ngoài (Sidebar, Header, Nav, Footer) */
+  body.is-printing-contract nav,
+  body:has(#official-tour-contract-print-area) nav,
+  body.is-printing-contract header,
+  body:has(#official-tour-contract-print-area) header,
+  body.is-printing-contract aside,
+  body:has(#official-tour-contract-print-area) aside,
+  body.is-printing-contract footer,
+  body:has(#official-tour-contract-print-area) footer,
+  body.is-printing-contract #root > div > *:not(main),
+  body:has(#official-tour-contract-print-area) #root > div > *:not(main) {
+    display: none !important;
+  }
+
+  /* Ẩn toàn bộ nội dung của trang quản lý đơn hàng nằm sau modal */
+  body.is-printing-contract main > *:not(.contract-modal-overlay),
+  body:has(#official-tour-contract-print-area) main > *:not(.contract-modal-overlay) {
+    display: none !important;
+  }
+
+  /* Giải phóng hoàn toàn các thẻ cha bao bọc modal về static flow, loại bỏ overflow-hidden */
+  body.is-printing-contract #root,
+  body:has(#official-tour-contract-print-area) #root,
+  body.is-printing-contract #root > div,
+  body:has(#official-tour-contract-print-area) #root > div,
+  body.is-printing-contract main,
+  body:has(#official-tour-contract-print-area) main,
+  body.is-printing-contract .contract-modal-overlay,
+  body:has(#official-tour-contract-print-area) .contract-modal-overlay,
+  body.is-printing-contract .contract-modal-container,
+  body:has(#official-tour-contract-print-area) .contract-modal-container,
+  body.is-printing-contract .contract-modal-body,
+  body:has(#official-tour-contract-print-area) .contract-modal-body,
+  body.is-printing-contract .contract-modal-scroll,
+  body:has(#official-tour-contract-print-area) .contract-modal-scroll {
+    position: static !important;
+    display: block !important;
+    overflow: visible !important;
+    max-height: none !important;
+    min-height: 0 !important;
+    height: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    backdrop-filter: none !important;
+    inset: auto !important;
+    z-index: auto !important;
+    transform: none !important;
+  }
+
+  /* Vùng in hợp đồng chính thức: Luồng tài liệu tự nhiên, ngắt trang đa trang mượt mà */
+  #official-tour-contract-print-area {
+    display: block !important;
+    visibility: visible !important;
+    position: static !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 2mm 4mm !important;
+    border: none !important;
+    box-shadow: none !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-family: 'Times New Roman', Times, serif !important;
+    font-size: 11pt !important;
+    line-height: 1.45 !important;
+    overflow: visible !important;
+    page-break-inside: auto;
+  }
+
+  #official-tour-contract-print-area * {
+    visibility: visible !important;
+    color: #000000 !important;
+  }
+
+  /* Đảm bảo mã QR và hình ảnh in rõ nét */
+  #official-tour-contract-print-area img {
+    max-width: 100% !important;
+    print-color-adjust: exact !important;
+    -webkit-print-color-adjust: exact !important;
+  }
+
+  /* --------------------------------------------------------------------------
+     2. Giấy đề nghị thanh toán (DNTT - Đơn trang A4)
+     -------------------------------------------------------------------------- */
+  body:has(#payment-proposal-print-area) nav,
+  body:has(#payment-proposal-print-area) header,
+  body:has(#payment-proposal-print-area) aside,
+  body:has(#payment-proposal-print-area) footer,
+  body:has(#payment-proposal-print-area) #root > div > *:not(main) {
+    display: none !important;
+  }
+
+  #payment-proposal-print-area,
+  #payment-proposal-print-area * {
+    visibility: visible !important;
+  }
+  #payment-proposal-print-area {
+    position: fixed !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100vw !important;
+    min-height: 100vh !important;
+    margin: 0 !important;
+    padding: 18mm 20mm 20mm 20mm !important;
+    background: white !important;
+    z-index: 999999 !important;
+    box-shadow: none !important;
+    border: none !important;
+    color: #000 !important;
+    font-family: 'Times New Roman', Times, serif !important;
+  }
+
+  /* --------------------------------------------------------------------------
+     3. Đơn xin nghỉ phép (Đơn trang A4)
+     -------------------------------------------------------------------------- */
+  body:has(#leave-request-print-area) nav,
+  body:has(#leave-request-print-area) header,
+  body:has(#leave-request-print-area) aside,
+  body:has(#leave-request-print-area) footer,
+  body:has(#leave-request-print-area) #root > div > *:not(main) {
+    display: none !important;
+  }
+
+  #leave-request-print-area,
+  #leave-request-print-area * {
+    visibility: visible !important;
+  }
+  #leave-request-print-area {
+    position: fixed !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100vw !important;
+    min-height: 100vh !important;
+    margin: 0 !important;
+    padding: 10mm 14mm 8mm 14mm !important;
+    background: white !important;
+    z-index: 999999 !important;
+    box-shadow: none !important;
+    border: none !important;
+    color: #000 !important;
+    font-family: 'Times New Roman', Times, serif !important;
+    page-break-inside: avoid !important;
+    page-break-after: avoid !important;
+  }
+
+  /* --------------------------------------------------------------------------
+     Quy tắc ngắt trang chung cho in ấn khổ A4
+     -------------------------------------------------------------------------- */
+  .page-break {
+    page-break-before: always !important;
+    break-before: page !important;
+    margin-top: 10mm !important;
+  }
+  .avoid-break {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+  table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    page-break-inside: auto;
+  }
+  tr {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  @page {
+    size: A4 portrait;
+    margin: 10mm 12mm;
+  }
+}
+

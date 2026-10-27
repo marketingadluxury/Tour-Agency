@@ -1,0 +1,56 @@
+name: Supabase Database Keep-Alive (Chống Auto-Pause)
+
+on:
+  schedule:
+    # Chạy vào 04:00 UTC (11:00 AM giờ Việt Nam) vào các ngày chẵn (mỗi 2 ngày 1 lần)
+    - cron: '0 4 */2 * *'
+  # Cho phép kích hoạt thủ công từ tab Actions trên GitHub
+  workflow_dispatch:
+
+jobs:
+  keep-alive:
+    name: Ping Supabase Database
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Supabase via App API
+        id: ping_app
+        env:
+          APP_URL: ${{ secrets.CRM_APP_URL }}
+        run: |
+          if [ -n "$APP_URL" ]; then
+            echo "Đang gửi yêu cầu giữ ấm tới CRM API: $APP_URL/api/keep-alive"
+            HTTP_STATUS=$(curl -s -o response.json -w "%{http_code}" "$APP_URL/api/keep-alive" || echo "000")
+            echo "HTTP Status: $HTTP_STATUS"
+            cat response.json || true
+            echo ""
+          else
+            echo "CRM_APP_URL chưa được cấu hình, chuyển sang ping trực tiếp Supabase REST API."
+          fi
+
+      - name: Ping Supabase REST API Directly
+        env:
+          SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL || secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY || secrets.SUPABASE_ANON_KEY }}
+        run: |
+          if [ -n "$SUPABASE_URL" ] && [ -n "$SUPABASE_KEY" ]; then
+            # Chuẩn hóa URL (bỏ dấu / ở cuối nếu có)
+            CLEAN_URL="${SUPABASE_URL%/}"
+            echo "Đang gửi query nhẹ tới Supabase REST API: $CLEAN_URL/rest/v1/profiles?select=id&limit=1"
+            
+            HTTP_CODE=$(curl -s -o sb_response.json -w "%{http_code}" \
+              -X GET "$CLEAN_URL/rest/v1/profiles?select=id&limit=1" \
+              -H "apikey: $SUPABASE_KEY" \
+              -H "Authorization: Bearer $SUPABASE_KEY")
+            
+            echo "Supabase Response Code: $HTTP_CODE"
+            cat sb_response.json || true
+            echo ""
+
+            if [ "$HTTP_CODE" -ge 200 ] && [ "$HTTP_CODE" -lt 400 ]; then
+              echo "✅ Giữ ấm Supabase Database thành công! Dự án tiếp tục duy trì trạng thái Active."
+            else
+              echo "⚠️ Nhận phản hồi $HTTP_CODE, database vẫn được ghi nhận hoạt động truy vấn."
+            fi
+          else
+            echo "ℹ️ Lưu ý: Để tự động ping trực tiếp, hãy cấu hình VITE_SUPABASE_URL và VITE_SUPABASE_ANON_KEY trong mục Settings > Secrets của GitHub repository."
+          fi
